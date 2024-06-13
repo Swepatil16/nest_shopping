@@ -1,7 +1,6 @@
-// src/products/products.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository,In } from 'typeorm';
 import { Products } from './products.entity';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
@@ -16,6 +15,12 @@ export class ProductsService {
   async createProduct(createProductDto: CreateProductDto): Promise<Products> {
     const product = this.productRepository.create(createProductDto);
     return this.productRepository.save(product);
+  }
+
+  async findByIds(ids: number[]): Promise<Products[]> {
+    return this.productRepository.find({
+      where: { id: In(ids) },
+    });
   }
 
   async findAll(): Promise<Products[]> {

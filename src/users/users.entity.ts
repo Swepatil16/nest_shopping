@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Orders } from '../orders/orders.entity';
+
 
 @Entity()
 export class Users {
@@ -13,6 +15,9 @@ export class Users {
 
   @Column()
   mobileNumber: string;
+
+  @OneToMany(() => Orders, order => order.user)
+  orders: Orders[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

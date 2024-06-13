@@ -1,5 +1,6 @@
-// src/products/entities/product.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Orders } from '../orders/orders.entity';
+
 
 @Entity()
 export class Products {
@@ -14,6 +15,9 @@ export class Products {
 
   @Column()
   description: string;
+
+  @OneToMany(() => Orders, order => order.products)
+  orders: Orders[];
 
   @CreateDateColumn()
   createdAt: Date;
